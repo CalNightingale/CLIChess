@@ -1,5 +1,7 @@
 mod board;
 mod constants;
+mod piece;
+
 use board::Board;
 
 fn main() {
