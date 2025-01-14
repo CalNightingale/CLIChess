@@ -32,7 +32,9 @@ impl Piece for Pawn {
     }
 
     fn get_available_moves(&self) -> Vec<(i32, i32)> {
-        // To be implemented later
-        Vec::new()
+        match self.color {
+            Color::White => vec![(1, 0)],  // White pawns move up one square
+            Color::Black => vec![(-1, 0)], // Black pawns move down one square
+        }
     }
 } 

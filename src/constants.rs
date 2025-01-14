@@ -4,3 +4,4 @@ pub const GRAY_BG: &str = "\x1b[47m";       // White/gray background
 pub const BLACK_PIECE: &str = "\x1b[1;30m";  // Bold black text
 pub const WHITE_PIECE: &str = "\x1b[1;97m";  // Bold bright white text
 pub const RESET: &str = "\x1b[0m";          // Reset formatting
+pub const GREEN_BG: &str = "\x1b[42m";      // Green background
