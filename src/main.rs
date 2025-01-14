@@ -2,6 +2,8 @@ mod board;
 mod constants;
 mod piece;
 mod pieces;
+#[cfg(test)]
+mod test_utils;
 
 use board::{Board, Turn};
 use std::io::{self, Write};

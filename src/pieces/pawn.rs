@@ -58,4 +58,58 @@ impl Piece for Pawn {
 
         moves
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::test_utils::TestBoard;
+
+    #[test]
+    fn test_pawn_movement() {
+        let mut test_board = TestBoard::empty();
+        
+        // Place white pawn for testing
+        test_board.place_piece(Box::new(Pawn::new(Color::White)), (1, 1));
+        
+        // Test valid moves
+        test_board.assert_valid_move((1, 1), (2, 1));   // One square forward
+        test_board.assert_valid_move((1, 1), (3, 1));   // Two squares forward
+        
+        // Test invalid moves
+        test_board.assert_invalid_move((1, 1), (1, 2)); // Sideways movement
+        test_board.assert_invalid_move((1, 1), (0, 1)); // Backward movement
+    }
+
+    #[test]
+    fn test_pawn_captures() {
+        let mut test_board = TestBoard::empty();
+        
+        // Place white pawn and black pieces for capture
+        test_board.place_piece(Box::new(Pawn::new(Color::White)), (3, 3));
+        test_board.place_piece(Box::new(Pawn::new(Color::Black)), (4, 2));
+        test_board.place_piece(Box::new(Pawn::new(Color::Black)), (4, 4));
+        
+        // Test diagonal captures
+        test_board.assert_valid_move((3, 3), (4, 2));   // Capture left
+        test_board.assert_valid_move((3, 3), (4, 4));   // Capture right
+    }
+
+    #[test]
+    fn test_pawn_blocked_movement() {
+        let mut test_board = TestBoard::empty();
+        
+        // Test blocked forward movement
+        test_board.place_piece(Box::new(Pawn::new(Color::White)), (1, 1));
+        test_board.place_piece(Box::new(Pawn::new(Color::Black)), (2, 1));
+        
+        test_board.assert_invalid_move((1, 1), (2, 1)); // Blocked by piece
+        test_board.assert_invalid_move((1, 1), (3, 1)); // Can't jump over piece
+        
+        // Test blocked by friendly piece
+        test_board.place_piece(Box::new(Pawn::new(Color::White)), (1, 3));
+        test_board.place_piece(Box::new(Pawn::new(Color::White)), (2, 4));
+        
+        test_board.assert_invalid_move((1, 3), (2, 4)); // Can't capture friendly piece
+    }
 } 

@@ -211,4 +211,36 @@ impl Board {
     pub fn get_piece_at(&self, row: usize, col: usize) -> Option<&Box<dyn Piece>> {
         self.grid[row][col].as_ref()
     }
+
+    #[cfg(test)]
+    pub fn clear(&mut self) {
+        self.grid = std::array::from_fn(|_| {
+            std::array::from_fn(|_| None)
+        });
+    }
+
+    #[cfg(test)]
+    pub fn place_piece(&mut self, piece: Box<dyn Piece>, pos: (usize, usize)) {
+        let (row, col) = pos;
+        self.grid[row][col] = Some(piece);
+    }
+
+    #[cfg(test)]
+    pub fn is_valid_move(&self, from: (usize, usize), to: (usize, usize)) -> bool {
+        if let Some(piece) = self.get_piece_at(from.0, from.1) {
+            let moves = piece.get_available_moves(from, self);
+            let delta = (
+                to.0 as i32 - from.0 as i32,
+                to.1 as i32 - from.1 as i32
+            );
+            moves.contains(&delta)
+        } else {
+            false
+        }
+    }
+
+    #[cfg(test)]
+    pub fn place_piece_at(&mut self, piece: Box<dyn Piece>, row: usize, col: usize) {
+        self.grid[row][col] = Some(piece);
+    }
 } 
