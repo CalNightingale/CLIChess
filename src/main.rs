@@ -1,6 +1,7 @@
 mod board;
 mod constants;
 mod piece;
+mod pieces;
 
 use board::{Board, Turn};
 use std::io::{self, Write};

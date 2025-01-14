@@ -1,4 +1,5 @@
-use crate::piece::{Piece, Color, Pawn};
+use crate::piece::{Piece, Color};
+use crate::pieces::pawn::Pawn;
 use crate::constants::*;  // Import all constants
 
 #[derive(Copy, Clone)]
