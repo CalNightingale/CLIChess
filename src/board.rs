@@ -138,11 +138,11 @@ impl Board {
     pub fn get_piece_moves(&self, position: &str) -> Option<Vec<(usize, usize)>> {
         if let Some((row, col)) = Self::parse_position(position) {
             if let Some(piece) = &self.grid[row][col] {
-                // Convert i32 coordinates to usize for valid moves
-                let moves = piece.get_available_moves()
+                // Pass current position and board reference to get_available_moves
+                let moves = piece.get_available_moves((row, col), self)
                     .into_iter()
                     .map(|(r, c)| ((row as i32 + r) as usize, (col as i32 + c) as usize))
-                    .filter(|(r, c)| *r < 8 && *c < 8) // Filter out moves outside the board
+                    .filter(|(r, c)| *r < 8 && *c < 8)
                     .collect();
                 return Some(moves);
             }
@@ -170,5 +170,13 @@ impl Board {
             }
         }
         false
+    }
+
+    pub fn is_occupied(&self, row: usize, col: usize) -> bool {
+        self.grid[row][col].is_some()
+    }
+
+    pub fn get_piece_at(&self, row: usize, col: usize) -> Option<&Box<dyn Piece>> {
+        self.grid[row][col].as_ref()
     }
 } 
