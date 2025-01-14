@@ -3,6 +3,8 @@ use crate::pieces::pawn::Pawn;
 use crate::pieces::rook::Rook;
 use crate::pieces::knight::Knight;
 use crate::pieces::bishop::Bishop;
+use crate::pieces::king::King;
+use crate::pieces::queen::Queen;
 use crate::constants::*;  // Import all constants
 
 #[derive(Copy, Clone)]
@@ -57,6 +59,14 @@ impl Board {
         board.grid[0][5] = Some(Box::new(Bishop::new(Color::White)));
         board.grid[7][2] = Some(Box::new(Bishop::new(Color::Black)));
         board.grid[7][5] = Some(Box::new(Bishop::new(Color::Black)));
+
+        // Place queens
+        board.grid[0][3] = Some(Box::new(Queen::new(Color::White)));
+        board.grid[7][3] = Some(Box::new(Queen::new(Color::Black)));
+
+        // Place kings
+        board.grid[0][4] = Some(Box::new(King::new(Color::White)));
+        board.grid[7][4] = Some(Box::new(King::new(Color::Black)));
 
         // Temporarily comment out other pieces until we implement them
         // We'll just start with pawns for now
