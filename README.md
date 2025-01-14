@@ -1,5 +1,6 @@
 # CLI Chess
 A simple CLI chess game built in Rust.
+![preview](preview.png)
 
 ## Project Goals
 - Learn Rust
